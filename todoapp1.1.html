@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Todo App</title>
+</head>
+<body class="p-4">
+    <div class="mx-auto shadow-xl w-80 rounded-lg p-4 mt-12.5">
+        <h1 class="font-bold">Todo App</h1>
+        
+        <div class="flex gap-2 my-2">
+            <input id="input" type="text" class="border p-2 rounded flex-1" placeholder="What to do?">
+            <button id="addBtn" class="bg-blue-500 text-white px-3 rounded">Add</button>
+        </div>
+
+        <ul id="list" class="my-2"></ul>
+
+        <div class="flex justify-between text-sm mt-2">
+            <span id="count">0 left</span>
+            <div class="space-x-2">
+                <button onclick="filter('all')">All</button>
+                <button onclick="filter('active')">Active</button>
+                <button onclick="filter('completed')">Completed</button>
+            </div>
+            <button onclick="clearCompleted()">Clear ✓</button>
+        </div>
+    </div>
+
+    <script>
+        let tasks = [];
+
+        function render() {
+            const list = document.getElementById('list');
+            list.innerHTML = tasks.map((t, i) => `
+                <li class="flex justify-between items-center py-1">
+                    <div class="flex gap-2">
+                        <input type="checkbox" ${t.done ? 'checked' : ''} onchange="toggle(${i})">
+                        <span style="${t.done ? 'text-decoration:line-through;opacity:0.6' : ''}">${t.text}</span>
+                    </div>
+                    <button onclick="deleteTask(${i})" class="text-red-500">✕</button>
+                </li>
+            `).join('');
+            document.getElementById('count').innerText = tasks.filter(t => !t.done).length + ' left';
+        }
+
+        function addTask() {
+            const input = document.getElementById('input');
+            if (input.value.trim()) {
+                tasks.push({ text: input.value, done: false });
+                input.value = '';
+                render();
+            }
+        }
+
+        function toggle(i) { tasks[i].done = !tasks[i].done; render(); }
+        function deleteTask(i) { tasks.splice(i, 1); render(); }
+        function filter(type) {
+            document.querySelectorAll('#list li').forEach((li, i) => {
+                if (type === 'all') li.style.display = 'flex';
+                else if (type === 'active') li.style.display = tasks[i].done ? 'none' : 'flex';
+                else li.style.display = tasks[i].done ? 'flex' : 'none';
+            });
+        }
+        function clearCompleted() { tasks = tasks.filter(t => !t.done); render(); }
+
+        document.getElementById('addBtn').onclick = addTask;
+        document.getElementById('input').onkeypress = (e) => e.key === 'Enter' && addTask();
+        
+        // Add sample tasks
+        ['Apple', 'Orange', 'Banana'].forEach(text => tasks.push({ text, done: false }));
+        render();
+    </script>
+</body>
+</html>

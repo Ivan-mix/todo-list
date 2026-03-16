@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Two Hearts - A Love Story 💕</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .game-wrapper {
+            max-width: 900px;
+            width: 100%;
+            background: rgba(22, 33, 62, 0.95);
+            border-radius: 30px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+            overflow: hidden;
+            border: 1px solid #e94560;
+            animation: glowPulse 3s infinite;
+        }
+        
+        @keyframes glowPulse {
+            0%, 100% { box-shadow: 0 30px 80px rgba(233,69,96,0.2); }
+            50% { box-shadow: 0 30px 100px rgba(233,69,96,0.4); }
+        }
+        
+        /* Header with characters */
+        .game-header {
+            background: linear-gradient(135deg, #0f3460, #1a1a2e);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid #e94560;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .game-header::before {
+            content: "❤️";
+            position: absolute;
+            font-size: 100px;
+            opacity: 0.05;
+            right: 20px;
+            animation: float 4s infinite;
+        }
+        
+        .header-char {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            animation: slideIn 1s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .char-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            border: 3px solid white;
+            animation: bounce 2s infinite;
+        }
+        
+        .boy .char-icon {
+            animation-delay: 0.3s;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .char-info h4 {
+            color: white;
+            font-size: 18px;
+            animation: fadeIn 2s;
+        }
+        
+        .char-info p {
+            color: #e94560;
+            font-size: 14px;
+        }
+        
+        .relationship-meter {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            animation: scaleIn 1s;
+        }
+        
+        @keyframes scaleIn {
+            from { transform: scale(0); }
+            to { transform: scale(1); }
+        }
+        
+        .meter-label {
+            color: white;
+            margin-bottom: 5px;
+        }
+        
+        .meter-bar {
+            width: 200px;
+            height: 15px;
+            background: #333;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .meter-fill {
+            height: 100%;
+            width: 80%;
+            background: linear-gradient(90deg, #e94560, #ff6b6b, #ffa6a6);
+            border-radius: 10px;
+            transition: width 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .meter-fill::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        /* Main game area */
+        .game-area {
+            padding: 30px;
+            background: #1a1a2e;
+            min-height: 500px;
+            position: relative;
+        }
+        
+        /* Scene image */
+        .scene-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, #0f3460, #1a1a4e);
+            border-radius: 20px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #e94560;
+            animation: sceneEnter 1s ease;
+        }
+        
+        @keyframes sceneEnter {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .scene-emoji {
+            font-size: 100px;
+            filter: drop-shadow(0 0 30px rgba(233,69,96,0.5));
+            animation: emojiFloat 3s infinite;
+        }
+        
+        @keyframes emojiFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-10px) rotate(5deg); }
+            75% { transform: translateY(10px) rotate(-5deg); }
+        }
+        
+        .floating-hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            animation: heartFloat 4s infinite;
+            opacity: 0;
+        }
+        
+        @keyframes heartFloat {
+            0% {
+                transform: translateY(100%) scale(0);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100%) scale(1.5);
+                opacity: 0;
+            }
+        }
+        
+        /* Story text box */
+        .story-box {
+            background: rgba(15, 52, 96, 0.9);
+            padding: 25px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            border: 2px solid #e94560;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
+            animation: slideUp 0.8s ease;
+            transform-origin: bottom;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .story-text {
+            color: white;
+            font-size: 18px;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            animation: fadeIn 1.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .story-time {
+            color: #e94560;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-top: 1px solid rgba(233,69,96,0.3);
+            padding-top: 10px;
+        }
+        
+        /* Choice buttons */
+        .choices-area {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .choice-card {
+            background: rgba(15, 52, 96, 0.8);
+            border: 2px solid #e94560;
+            border-radius: 15px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            backdrop-filter: blur(5px);
+            animation: cardSlide 0.5s ease;
+            animation-fill-mode: both;
+        }
+        
+        .choice-card:nth-child(1) { animation-delay: 0.1s; }
+        .choice-card:nth-child(2) { animation-delay: 0.2s; }
+        .choice-card:nth-child(3) { animation-delay: 0.3s; }
+        
+        @keyframes cardSlide {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .choice-card:hover {
+            transform: translateX(10px) scale(1.02);
+            background: rgba(26, 26, 78, 0.9);
+            box-shadow: 0 5px 30px rgba(233,69,96,0.4);
+            border-color: white;
+        }
+        
+        .choice-card:active {
+            transform: scale(0.98);
+        }
+        
+        .choice-emoji {
+            font-size: 30px;
+            min-width: 50px;
+            text-align: center;
+            animation: wiggle 2s infinite;
+        }
+        
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(10deg); }
+            75% { transform: rotate(-10deg); }
+        }
+        
+        .choice-text {
+            color: white;
+            font-size: 16px;
+            flex: 1;
+        }
+        
+        .choice-impact {
+            color: #e94560;
+            font-size: 14px;
+            font-style: italic;
+            padding: 5px 10px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+        
+        /* Chapter indicator */
+        .chapter-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            font-size: 14px;
+            animation: badgePop 1s;
+            box-shadow: 0 5px 15px rgba(233,69,96,0.3);
+        }
+        
+        @keyframes badgePop {
+            0% { transform: scale(0); }
+            80% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Memory collection */
+        .memories-bar {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(15, 52, 96, 0.5);
+            border-radius: 15px;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+            animation: fadeInUp 1s;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .memory-icon {
+            width: 50px;
+            height: 50px;
+            background: #1a1a2e;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            border: 2px solid #e94560;
+            opacity: 0.3;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            cursor: pointer;
+            animation: memoryPulse 2s infinite;
+        }
+        
+        @keyframes memoryPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .memory-icon.unlocked {
+            opacity: 1;
+            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            transform: scale(1.1);
+            box-shadow: 0 0 20px #e94560;
+            animation: unlockedSpin 1s;
+        }
+        
+        @keyframes unlockedSpin {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.2); }
+            100% { transform: rotate(360deg) scale(1.1); }
+        }
+        
+        .memory-icon:hover {
+            transform: scale(1.2);
+            filter: brightness(1.2);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .game-header {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .meter-bar {
+                width: 150px;
+            }
+        }
+        
+        /* Particle effect */
+        .particle {
+            position: fixed;
+            pointer-events: none;
+            font-size: 20px;
+            animation: particleFall 3s linear forwards;
+            z-index: 1000;
+        }
+        
+        @keyframes particleFall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-wrapper">
+        <!-- Header with character stats -->
+        <div class="game-header">
+            <div class="header-char girl">
+                <div class="char-icon">👧🌱</div>
+                <div class="char-info">
+                    <h4>Lily</h4>
+                    <p>Plant Lover • Kind Heart</p>
+                </div>
+            </div>
+            
+            <div class="relationship-meter">
+                <div class="meter-label">❤️ Relationship <span id="relationshipValue">80</span>%</div>
+                <div class="meter-bar">
+                    <div class="meter-fill" id="relationshipFill" style="width: 80%"></div>
+                </div>
+            </div>
+            
+            <div class="header-char boy">
+                <div class="char-info" style="text-align: right;">
+                    <h4>Alex</h4>
+                    <p>Gamer • Loyal Friend</p>
+                </div>
+                <div class="char-icon">👦🎮</div>
+            </div>
+        </div>
+        
+        <!-- Main game area -->
+        <div class="game-area">
+            <!-- Chapter indicator -->
+            <div class="chapter-badge" id="chapterDisplay">Chapter 1: First Meeting</div>
+            
+            <!-- Scene image with floating hearts -->
+            <div class="scene-image" id="sceneImage">
+                <div class="floating-hearts" id="floatingHearts"></div>
+                <div class="scene-emoji" id="sceneEmoji">🏫✨</div>
+            </div>
+            
+            <!-- Story text box -->
+            <div class="story-box">
+                <div class="story-text" id="storyText">
+                    It was a beautiful Monday morning at Sunshine High School. Lily was watering the school garden, her favorite place, when she heard someone cheering loudly nearby...
+                </div>
+                <div class="story-time" id="storyTime">
+                    <span>⏰ Monday Morning - School Garden</span>
+                    <span>❤️ Day 1</span>
+                </div>
+            </div>
+            
+            <!-- Choices area -->
+            <div class="choices-area" id="choicesArea"></div>
+            
+            <!-- Memories collection -->
+            <div class="memories-bar" id="memoriesBar">
+                <div class="memory-icon" id="memory1" title="First Meeting">🌱</div>
+                <div class="memory-icon" id="memory2" title="Sharing Hobbies">🎮</div>
+                <div class="memory-icon" id="memory3" title="First Date">💕</div>
+                <div class="memory-icon" id="memory4" title="Reconciliation">🌙</div>
+                <div class="memory-icon" id="memory5" title="Happy Ending">🌸</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Game state
+        let gameState = {
+            chapter: 1,
+            relationship: 80,
+            memories: [false, false, false, false, false],
+            currentScene: "chapter1_scene1"
+        };
+        
+        // Story data
+        const story = {
+            chapter1_scene1: {
+                chapter: 1,
+                chapterTitle: "First Meeting",
+                text: "It was a beautiful Monday morning at Sunshine High School. Lily was watering the school garden, her favorite place, when she heard someone cheering loudly nearby. She looked up and saw a boy jumping excitedly while looking at his phone.",
+                time: "Monday Morning - School Garden",
+                emoji: "🏫🌺",
+                choices: [
+                    {
+                        text: "Walk over and ask what he's so excited about",
+                        emoji: "👋",
+                        impact: "+5 relationship",
+                        nextScene: "chapter1_scene2",
+                        relationshipChange: 5,
+                        memory: 0
+                    },
+                    {
+                        text: "Ignore him and continue gardening",
+                        emoji: "🌱",
+                        impact: "Stay focused",
+                        nextScene: "chapter1_scene1b",
+                        relationshipChange: 0,
+                        memory: null
+                    }
+                ]
+            },
+            
+            chapter1_scene1b: {
+                chapter: 1,
+                chapterTitle: "First Meeting",
+                text: "Lily tried to focus on her sunflowers, but the boy's excitement was contagious. She found herself smiling at his joyful cheers. 'He must really love that game,' she thought.",
+                time: "Monday Morning - School Garden",
+                emoji: "👀🌻",
+                choices: [
+                    {
+                        text: "Give in and go say hello",
+                        emoji: "😊",
+                        impact: "+3 relationship",
+                        nextScene: "chapter1_scene2",
+                        relationshipChange: 3,
+                        memory: 0
+                    }
+                ]
+            },
+            
+            chapter1_scene2: {
+                chapter: 1,
+                chapterTitle: "First Meeting",
+                text: "'Oh, sorry! Did I disturb you?' Alex asked, looking up from his phone with a embarrassed smile. 'I just beat my high score on Garden Quest!' His eyes lit up as he explained. Lily noticed they were the same warm brown as the soil she loved.",
+                time: "Monday Morning - School Garden",
+                emoji: "👦✨",
+                choices: [
+                    {
+                        text: "'Garden Quest? Tell me more!'",
+                        emoji: "🎮",
+                        impact: "Learn about gaming",
+                        nextScene: "chapter1_scene3a",
+                        relationshipChange: 2,
+                        memory: null
+                    },
+                    {
+                        text: "'Want to see my real garden?'",
+                        emoji: "🌻",
+                        impact: "Share your hobby",
+                        nextScene: "chapter1_scene3b",
+                        relationshipChange: 2,
+                        memory: null
+                    }
+                ]
+            },
+            
+            chapter1_scene3a: {
+                chapter: 1,
+                chapterTitle: "First Meeting",
+                text: "'It's a game where you build virtual gardens and battle plant monsters!' Alex explained excitedly. Lily laughed. 'Plant monsters? That sounds silly... but also kind of fun!' She found herself genuinely curious about his world.",
+                time: "Monday Morning - School Garden",
+                emoji: "🎮🌱",
+                choices: [
+                    {
+                        text: "'Can you teach me to play?'",
+                        emoji: "📱",
+                        impact: "+8 relationship",
+                        nextScene: "chapter1_scene4",
+                        relationshipChange: 8,
+                        memory: 1
+                    }
+                ]
+            },
+            
+            chapter1_scene3b: {
+                chapter: 1,
+                chapterTitle: "First Meeting",
+                text: "Lily showed Alex her sunflowers. 'I've been growing these for two months. They need lots of love and sunshine.' Alex's eyes widened. 'You grew these? That's awesome! In my game, you'd get legendary plants for this!'",
+                time: "Monday Morning - School Garden",
+                emoji: "🌻✨",
+                choices: [
+                    {
+                        text: "'Tell me about your game while we garden'",
+                        emoji: "😊",
+                        impact: "+8 relationship",
+                        nextScene: "chapter1_scene4",
+                        relationshipChange: 8,
+                        memory: 1
+                    }
+                ]
+            },
+            
+            chapter1_scene4: {
+                chapter: 1,
+                chapterTitle: "First Meeting",
+                text: "They spent the whole break together. Alex showed Lily his game, and Lily taught Alex how to plant seeds. When the bell rang, they both felt like time had flown by. 'Same time tomorrow?' Alex asked hopefully. Lily nodded, her heart fluttering.",
+                time: "Monday Afternoon - School Garden",
+                emoji: "💕✨",
+                choices: [
+                    {
+                        text: "Continue to Chapter 2",
+                        emoji: "📖",
+                        impact: "A new friendship blooms",
+                        nextScene: "chapter2_scene1",
+                        relationshipChange: 5,
+                        memory: 2
+                    }
+                ]
+            },
+            
+            chapter2_scene1: {
+                chapter: 2,
+                chapterTitle: "Growing Together",
+                text: "Weeks passed. Lily and Alex met every day under the old oak tree. She taught him the names of flowers, and he showed her how to build gardens in his game. They became inseparable. But today, something felt different.",
+                time: "Friday Afternoon - The Oak Tree",
+                emoji: "🌳💑",
+                choices: [
+                    {
+                        text: "Notice Lily seems distracted",
+                        emoji: "🤔",
+                        impact: "Pay attention",
+                        nextScene: "chapter2_scene2",
+                        relationshipChange: 0,
+                        memory: null
+                    },
+                    {
+                        text: "Notice Alex keeps checking his phone",
+                        emoji: "📱",
+                        impact: "Notice the problem",
+                        nextScene: "chapter2_scene2",
+                        relationshipChange: 0,
+                        memory: null
+                    }
+                ]
+            },
+            
+            chapter2_scene2: {
+                chapter: 2,
+                chapterTitle: "Growing Together",
+                text: "Lily had prepared a special gift - tiny succulents arranged in a pot she decorated herself. But Alex was so focused on reaching a new level that he didn't notice. Alex, meanwhile, had saved up to buy Lily a rare plant skin, but she seemed uninterested in his game today.",
+                time: "Friday Afternoon - The Oak Tree",
+                emoji: "😔💔",
+                choices: [
+                    {
+                        text: "Lily feels hurt and walks away",
+                        emoji: "🚶‍♀️",
+                        impact: "-10 relationship",
+                        nextScene: "chapter2_scene3a",
+                        relationshipChange: -10,
+                        memory: null
+                    },
+                    {
+                        text: "Alex gets frustrated and leaves",
+                        emoji: "🚶‍♂️",
+                        impact: "-10 relationship",
+                        nextScene: "chapter2_scene3b",
+                        relationshipChange: -10,
+                        memory: null
+                    }
+                ]
+            },
+            
+            chapter2_scene3a: {
+                chapter: 2,
+                chapterTitle: "Growing Together",
+                text: "Lily went home and sat in her garden, watching the sunset. The succulents she'd prepared for Alex seemed to droop with her heavy heart. 'Maybe he doesn't care about real things,' she whispered to herself.",
+                time: "Friday Evening - Lily's Garden",
+                emoji: "😢🌙",
+                choices: [
+                    {
+                        text: "Later that night, her phone buzzes...",
+                        emoji: "📱💭",
+                        impact: "A message from Alex",
+                        nextScene: "chapter2_scene4",
+                        relationshipChange: 0,
+                        memory: null
+                    }
+                ]
+            },
+            
+            chapter2_scene3b: {
+                chapter: 2,
+                chapterTitle: "Growing Together",
+                text: "Alex sat in his room, staring at the plant skin he'd bought for Lily. 'She probably thinks I'm obsessed with stupid games,' he muttered. For the first time, his game felt empty.",
+                time: "Friday Evening - Alex's Room",
+                emoji: "😔🎮",
+                choices: [
+                    {
+                        text: "Alex reaches for his phone...",
+                        emoji: "📱💭",
+                        impact: "Time to make things right",
+                        nextScene: "chapter2_scene4",
+                        relationshipChange: 0,
+                        memory: null
+                    }
+                ]
+            },
+            
+            chapter2_scene4: {
+                chapter: 2,
+                chapterTitle: "Growing Together",
+                text: "At the exact same moment, both of them sent messages:\n\nAlex: 'I'm sorry. Can we meet?'\nLily: 'I miss you. Come see my garden?'",
+                time: "Friday Night - Under the Same Moon",
+                emoji: "🌙💕",
+                choices: [
+                    {
+                        text: "Meet at the school garden at midnight",
+                        emoji: "🌙✨",
+                        impact: "Choose love",
+                        nextScene: "chapter2_scene5",
+                        relationshipChange: 20,
+                        memory: 3
+                    }
+                ]
+            },
+            
+            chapter2_scene5: {
+                chapter: 2,
+                chapterTitle: "Growing Together",
+                text: "Under the moonlight, Lily showed Alex her special gift - the succulents arranged in a heart shape. 'For you,' she whispered. Alex smiled and showed her his phone - he'd created a garden in his game, naming it 'Lily's Secret Garden.' They hugged, realizing that love means sharing your worlds.",
+                time: "Midnight - School Garden",
+                emoji: "🌙❤️🌱",
+                choices: [
+                    {
+                        text: "Continue to Chapter 3",
+                        emoji: "📖",
+                        impact: "A new beginning",
+                        nextScene: "chapter3_scene1",
+                        relationshipChange: 10,
+                        memory: 4
+                    }
+                ]
+            },
+            
+            chapter3_scene1: {
+                chapter: 3,
+                chapterTitle: "Two Worlds, One Heart",
+                text: "Months later, the school garden had a new bench with a small plaque: 'Lily & Alex - Growing Together.' Now, you can find them there every day - Lily planting new flowers while Alex plays nearby, but now they share everything: she helps him with his game, and he helps her in the real garden.",
+                time: "Spring Morning - Their Special Spot",
+                emoji: "🌸🎮💑",
+                choices: [
+                    {
+                        text: "See the ending",
+                        emoji: "❤️",
+                        impact: "Complete their story",
+                        nextScene: "ending",
+                        relationshipChange: 0,
+                        memory: null
+                    }
+                ]
+            }
+        };
+        
+        // Ending scene
+        const ending = {
+            text: "Lily and Alex learned that love isn't about changing who you are - it's about growing together while staying true to yourselves. She still loves planting, he still loves gaming, but now they've planted a garden in his game that looks just like her real one.\n\nTheir love bloomed beautifully, like Lily's sunflowers, always reaching towards the sun together. 🌻❤️🎮",
+            time: "Forever After",
+            emoji: "💕✨🌱🎮"
+        };
+        
+        // Load scene function
+        function loadScene(sceneId) {
+            // Create floating hearts effect
+            createFloatingHearts();
+            
+            if (sceneId === "ending") {
+                // Show ending
+                document.getElementById('chapterDisplay').textContent = "The End ❤️";
+                document.getElementById('storyText').textContent = ending.text;
+                document.getElementById('storyTime').innerHTML = `<span>⏰ ${ending.time}</span><span>❤️ ${gameState.relationship}%</span>`;
+                document.getElementById('sceneEmoji').textContent = ending.emoji;
+                
+                // Clear choices area for ending
+                document.getElementById('choicesArea').innerHTML = `
+                    <div class="choice-card" onclick="resetGame()">
+                        <div class="choice-emoji">🔄</div>
+                        <div class="choice-text">Play Again - Relive the story</div>
+                        <div class="choice-impact">Start over</div>
+                    </div>
+                `;
+            } else {
+                // Get scene data
+                const scene = story[sceneId];
+                
+                // Update chapter display
+                document.getElementById('chapterDisplay').textContent = `Chapter ${scene.chapter}: ${scene.chapterTitle}`;
+                
+                // Update story text with typing animation
+                typeWriter(scene.text);
+                
+                // Update time and emoji
+                document.getElementById('storyTime').innerHTML = `<span>⏰ ${scene.time}</span><span>❤️ Day ${gameState.chapter}</span>`;
+                document.getElementById('sceneEmoji').textContent = scene.emoji;
+                
+                // Update choices
+                const choicesArea = document.getElementById('choicesArea');
+                choicesArea.innerHTML = '';
+                
+                scene.choices.forEach(choice => {
+                    const choiceCard = document.createElement('div');
+                    choiceCard.className = 'choice-card';
+                    choiceCard.onclick = () => {
+                        // Create particle effect
+                        createParticles();
+                        
+                        // Update relationship
+                        if (choice.relationshipChange) {
+                            gameState.relationship += choice.relationshipChange;
+                            if (gameState.relationship < 0) gameState.relationship = 0;
+                            if (gameState.relationship > 100) gameState.relationship = 100;
+                            
+                            // Update relationship display
+                            document.getElementById('relationshipFill').style.width = gameState.relationship + '%';
+                            document.getElementById('relationshipValue').textContent = gameState.relationship;
+                        }
+                        
+                        // Unlock memory
+                        if (choice.memory !== null && choice.memory !== undefined) {
+                            gameState.memories[choice.memory] = true;
+                            updateMemories();
+                        }
+                        
+                        // Update chapter if needed
+                        if (choice.nextScene.includes('chapter2')) {
+                            gameState.chapter = 2;
+                        } else if (choice.nextScene.includes('chapter3')) {
+                            gameState.chapter = 3;
+                        }
+                        
+                        // Load next scene
+                        loadScene(choice.nextScene);
+                    };
+                    
+                    choiceCard.innerHTML = `
+                        <div class="choice-emoji">${choice.emoji}</div>
+                        <div class="choice-text">${choice.text}</div>
+                        <div class="choice-impact">${choice.impact}</div>
+                    `;
+                    
+                    choicesArea.appendChild(choiceCard);
+                });
+            }
+            
+            // Update relationship display
+            document.getElementById('relationshipFill').style.width = gameState.relationship + '%';
+            document.getElementById('relationshipValue').textContent = gameState.relationship;
+        }
+        
+        // Typewriter effect
+        function typeWriter(text) {
+            const element = document.getElementById('storyText');
+            element.innerHTML = '';
+            let i = 0;
+            
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, 20);
+                }
+            }
+            
+            type();
+        }
+        
+        // Create floating hearts
+        function createFloatingHearts() {
+            const container = document.getElementById('floatingHearts');
+            container.innerHTML = '';
+            
+            for (let i = 0; i < 10; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 3 + 's';
+                heart.style.fontSize = (10 + Math.random() * 20) + 'px';
+                heart.innerHTML = ['❤️', '💕', '💗', '💓', '💖'][Math.floor(Math.random() * 5)];
+                container.appendChild(heart);
+            }
+        }
+        
+        // Create particle effect
+        function createParticles() {
+            for (let i = 0; i < 10; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 0.5 + 's';
+                particle.innerHTML = ['✨', '💫', '⭐', '🌟', '💕'][Math.floor(Math.random() * 5)];
+                document.body.appendChild(particle);
+                
+                setTimeout(() => {
+                    particle.remove();
+                }, 3000);
+            }
+        }
+        
+        // Update memories display
+        function updateMemories() {
+            for (let i = 0; i < gameState.memories.length; i++) {
+                const memory = document.getElementById(`memory${i+1}`);
+                if (gameState.memories[i]) {
+                    memory.classList.add('unlocked');
+                    
+                    // Add click event to show memory description
+                    memory.onclick = () => {
+                        const descriptions = [
+                            "💕 First Meeting - When Lily and Alex first met in the garden",
+                            "🎮 Sharing Hobbies - They discovered each other's passions",
+                            "🌱 Growing Together - Their friendship bloomed",
+                            "🌙 Midnight Reconciliation - They made up under the moonlight",
+                            "🌸 Happy Ending - Love bloomed forever"
+                        ];
+                        alert(descriptions[i]);
+                    };
+                }
+            }
+        }
+        
+        // Reset game
+        function resetGame() {
+            gameState = {
+                chapter: 1,
+                relationship: 80,
+                memories: [false, false, false, false, false],
+                currentScene: "chapter1_scene1"
+            };
+            
+            // Reset memories display
+            for (let i = 0; i < 5; i++) {
+                const memory = document.getElementById(`memory${i+1}`);
+                memory.classList.remove('unlocked');
+            }
+            
+            // Load first scene
+            loadScene("chapter1_scene1");
+            
+            // Create celebration effect
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    createParticles();
+                }, i * 100);
+            }
+        }
+        
+        // Initialize game
+        window.onload = () => {
+            loadScene("chapter1_scene1");
+            createFloatingHearts();
+        };
+    </script>
+</body>
+</html>
